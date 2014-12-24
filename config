@@ -146,16 +146,16 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3status | ~/i3status/contrib/wrapper.py
 	position top
 }
 
 #--- THIS IS MY CONFIG ---#
 
 # lock screen
-bindsym $mod+Control+l exec i3lock
+bindsym $mod+Control+l exec i3lock -i /home/fmarchenko/.i3/lockscreen.png -n -c 000000 -t
 # lock screen and suspend
-bindsym $mod+Control+s exec i3lock && dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+bindsym $mod+Control+s exec i3lock -i /home/fmarchenko/.i3/lockscreen.png -n -c 000000 -t && dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
 # switch workspaces by mod+ctrl+left/right
 bindsym $mod+Control+Left workspace prev
 bindsym $mod+Control+Right workspace next
@@ -169,6 +169,7 @@ bindsym $mod+F2 exec charm
 bindsym $mod+F3 exec pidgin
 bindsym $mod+F4 exec skype
 bindsym $mod+F5 exec thunderbird
+bindsym $mod+F6 exec VirtualBox --comment Windows 7 --startvm 080d700d-f56c-4c07-b239-b536d1c6e7a1 --no-startvm-errormsgbox
 bindsym $mod+Control+y exec yandex-browser
 
 workspace 1 output VGA1
