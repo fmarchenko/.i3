@@ -168,9 +168,9 @@ bindsym $mod+Control+Left workspace prev
 bindsym $mod+Control+Right workspace next
 
 # volume control
-bindsym $mod+Prior exec pactl set-sink-volume 1 -- +5%
-bindsym $mod+Next exec pactl set-sink-volume 1 -- -5%
-bindsym $mod+Home exec pactl set-sink-mute 1 -- toggle
+bindsym $mod+Prior exec pactl set-sink-volume 1 +5%
+bindsym $mod+Next exec pactl set-sink-volume 1 -5%
+bindsym $mod+Home exec pactl set-sink-mute 1 toggle
 
 # quick apps
 bindsym $mod+F1 exec google-chrome
@@ -181,10 +181,10 @@ bindsym $mod+F5 exec thunderbird
 bindsym $mod+F6 exec VirtualBox --comment Windows 7 --startvm 080d700d-f56c-4c07-b239-b536d1c6e7a1 --no-startvm-errormsgbox
 bindsym $mod+Control+y exec yandex-browser
 
-workspace 1 output VGA-1
-workspace 2 output VGA-1
-workspace 3 output VGA-1
-workspace 4 output VGA-1
+workspace 1 output VGA-0
+workspace 2 output VGA-0
+workspace 3 output VGA-0
+workspace 4 output VGA-0
 workspace 5 output DVI-I-1
 workspace 6 output DVI-I-1
 workspace 7 output DVI-I-1
@@ -200,6 +200,7 @@ exec killall -q xfce4-notifyd
 exec --no-startup-id dunst -config ~/.i3/i3_config_dunst
 
 for_window [class="Wine"] floating enable, border 1pixel
+for_window [class="TeamViewer"] floating enable, border 1pixel
 for_window [class="Xfce4-notifyd"] floating enable, border 1pixel
 #for_window [class="Thunar"] floating enable, border 1pixel
 #for_window [class="Skype"] floating enable, border 1pixel
