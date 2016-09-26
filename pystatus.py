@@ -26,6 +26,25 @@ status.register("weather",
 status.register("clock",
     format="%a %-d %b %X KW%V",)
 
+# The battery monitor has many formatting options, see README for details
+
+# This would look like this, when discharging (or charging)
+# ↓14.22W 56.15% [77.81%] 2h:41m
+# And like this if full:
+# =14.22W 100.0% [91.21%]
+#
+# This would also display a desktop notification (via dbus) if the percentage
+# goes below 5 percent while discharging. The block will also color RED.
+status.register("battery",
+    format="{status}/{consumption:.2f}W {percentage:.2f}% [{percentage_design:.2f}%] {remaining:%E%hh:%Mm}",
+    alert=True,
+    alert_percentage=5,
+    status={
+        "DIS": "↓",
+        "CHR": "↑",
+        "FULL": "=",
+},)
+
 # Shows the average load of the last minute and the last 5 minutes
 # (the default value for format is used)
 status.register("load")
@@ -42,8 +61,13 @@ status.register("temp",
 #
 # Note: the network module requires PyPI package netifaces
 status.register("network",
-    interface="eth3",
+    interface="eth0",
+#    interface="wlan0",
     format_up="{v4cidr}",)
+
+status.register("wireless",
+    format_up="{essid} ({v4}) {quality:2.0f}%"
+)
 
 # Shows disk usage of /
 # Format:
