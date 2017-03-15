@@ -25,6 +25,9 @@ font pango: Droid Sans Mono 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+floating_minimum_size 75 x 75
+floating_maximum_size -1 x -1
+
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
@@ -164,10 +167,12 @@ bindsym $mod+Control+s exec i3lock && dbus-send --system --print-reply --dest=or
 bindsym $mod+Control+Left workspace prev
 bindsym $mod+Control+Right workspace next
 
+# volume control
 bindsym $mod+Prior exec pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo -- +5%
 bindsym $mod+Next exec pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo -- -5%
 bindsym $mod+Home exec pactl set-sink-mute alsa_output.pci-0000_00_1b.0.analog-stereo -- toggle
 
+# quick apps
 bindsym $mod+F1 exec google-chrome
 bindsym $mod+F2 exec charm
 bindsym $mod+F3 exec pidgin
@@ -191,3 +196,16 @@ exec setxkbmap "us,ru" ",winkeys" "grp:alt_shift_toggle"
 exec --no-startup-id nm-applet
 exec --no-startip-id xfce4-power-manager
 exec --no-startup-id feh --bg-scale /home/fedor/Dropbox/Pictures/Обои/Linux/tux-blueprint-linux-15395.jpg
+# autorun
+#exec --no-startup-id feh --bg-fill ~/Desktop/bg.jpg
+#exec --no-startup-id nm-applet
+#exec --no-startup-id xset r rate 250 35
+
+for_window [class="Wine"] floating enable, border 1pixel
+for_window [class="TeamViewer"] floating enable, border 1pixel
+#for_window [class="Thunar"] floating enable, border 1pixel
+#for_window [class="Skype"] floating enable, border 1pixel
+#for_window [class="Pidgin"] floating enable, border 1pixel
+for_window [class="Firefox"] border none
+for_window [class="Google-chrome"] border none
+for_window [class="Xfce4-notes"] floating enable, border none
