@@ -65,7 +65,8 @@ status.register("network",
 #    interface="wlan0",
     format_up="{v4cidr}",)
 
-status.register("wireless",
+status.register("network",
+    interface="wlan0",
     format_up="{essid} ({v4}) {quality:2.0f}%"
 )
 
@@ -87,8 +88,10 @@ status.register("disk",
 #         "stop": "◾",
 #     },)
 
-status.register("tcchk",
-    host="mail1.100files.com", login="fmarchenko", password="KkQgH2Br"
-)
+#status.register("tcchk",
+#    host="mail1.100files.com", login="fmarchenko", password="KkQgH2Br"
+#)
+
+status.register("time_tracker")
 
 status.run()
