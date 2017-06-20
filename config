@@ -14,13 +14,24 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
-font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+#font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-# font pango:DejaVu Sans Mono 10
-font pango: Droid Sans Mono 8
+#font pango:DejaVu Sans Mono 8
+font pango:Droid Sans Mono, FontAwesome 8
+
+set $black        #282828
+set $darkblack    #1d2021
+set $darkwhite    #ffffff
+set $whitesmoke   #f5f5f5
+set $skyblue      #3399ff
+set $green        #42b879
+set $darkred      #8b0000
+set $darkgray     #414141
+set $lightgray    #D3D3D3
+set $transparent  #000000E5
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -78,6 +89,7 @@ bindsym $mod+f fullscreen
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+bindsym $mod+t sticky enable
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -91,29 +103,65 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
+# Name the workspaces
+set $tag1 "1: &#xf120;"
+set $tag2 "2: &#xf1d7;"
+set $tag3 "3: &#xf121;"
+set $tag4 "4: &#xf001;"
+set $tag5 "5: &#xf121;"
+set $tag6 "6: &#xf1a0;"
+set $tag7 "7: 7"
+set $tag8 "8: &#xf17a;"
+set $tag9 "9: 9"
+set $tag10 "10: 10"
+
+# workspaces from 1-10
+bindsym $mod+1 workspace $tag1
+bindsym $mod+2 workspace $tag2
+bindsym $mod+3 workspace $tag3
+bindsym $mod+4 workspace $tag4
+bindsym $mod+5 workspace $tag5
+bindsym $mod+6 workspace $tag6
 bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
+bindsym $mod+8 workspace $tag8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
+# workspaces from 11-20
+bindsym $mod+Control+1 workspace 11
+bindsym $mod+Control+2 workspace 12
+bindsym $mod+Control+3 workspace 13
+bindsym $mod+Control+4 workspace 14
+bindsym $mod+Control+5 workspace 15
+bindsym $mod+Control+6 workspace 16
+bindsym $mod+Control+7 workspace 17
+bindsym $mod+Control+8 workspace 18
+bindsym $mod+Control+9 workspace 19
+bindsym $mod+Control+0 workspace 20
+
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+1 move container to workspace $tag1
+bindsym $mod+Shift+2 move container to workspace $tag2
+bindsym $mod+Shift+3 move container to workspace $tag3
+bindsym $mod+Shift+4 move container to workspace $tag4
+bindsym $mod+Shift+5 move container to workspace $tag5
+bindsym $mod+Shift+6 move container to workspace $tag6
 bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+8 move container to workspace $tag8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+
+# workspaces from 11-20
+bindsym $mod+Control+Shift+1 move container to workspace 11
+bindsym $mod+Control+Shift+2 move container to workspace 12
+bindsym $mod+Control+Shift+3 move container to workspace 13
+bindsym $mod+Control+Shift+4 move container to workspace 14
+bindsym $mod+Control+Shift+5 move container to workspace 15
+bindsym $mod+Control+Shift+6 move container to workspace 16
+bindsym $mod+Control+Shift+7 move container to workspace 17
+bindsym $mod+Control+Shift+8 move container to workspace 18
+bindsym $mod+Control+Shift+9 move container to workspace 19
+bindsym $mod+Control+Shift+0 move container to workspace 20
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -153,24 +201,47 @@ bindsym $mod+r mode "resize"
 bar {
 #	status_command i3status | ~/i3status/contrib/wrapper.py
 	status_command python3 ~/.i3/pystatus.py
-	font pango: Droid Sans 8
+	font pango: Droid Sans, FontAwesome 8
 	position top
+
+    colors {
+    background $transparent
+    statusline $darkwhite
+    separator $transparent
+
+#                      Border           Background       Text
+    focused_workspace  $transparent     $lightgray       $black
+    active_workspace   $transparent     $transparent     $darkgray
+    inactive_workspace $transparent     $transparent     $darkgray
+    urgent_workspace   $whitesmoke      $whitesmoke      $green
+        binding_mode       $whitesmoke      $whitesmoke      $black
+    }
+    #strip_workspace_numbers yes
+	i3bar_command i3bar
 }
+
+# Colors          Border       Background Text
+client.focused    $transparent $lightgray $black
+client.unfocused  $transparent $black     $lightgray
+client.urgent     $transparent $darkred   $lightgray
+client.background $transparent
 
 #--- THIS IS MY CONFIG ---#
 
 # lock screen
 bindsym $mod+Control+l exec i3lock -i /home/fmarchenko/.i3/lockscreen.png -n -c 000000 -t
+#bindsym $mod+Control+l exec ~/.i3/scripts/i3lock.sh
 # lock screen and suspend
 bindsym $mod+Control+s exec i3lock && dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+bindsym --release Print exec --no-startup-id /home/fmarchenko/.i3/screenshot.py
 # switch workspaces by mod+ctrl+left/right
 bindsym $mod+Control+Left workspace prev
 bindsym $mod+Control+Right workspace next
 
 # volume control
-bindsym $mod+Prior exec pactl set-sink-volume 1 +5%
-bindsym $mod+Next exec pactl set-sink-volume 1 -5%
-bindsym $mod+Home exec pactl set-sink-mute 1 toggle
+bindsym $mod+Prior exec pactl set-sink-volume 2 +5%
+bindsym $mod+Next exec pactl set-sink-volume 2 -5%
+bindsym $mod+Home exec pactl set-sink-mute 2 toggle
 
 # quick apps
 bindsym $mod+F1 exec google-chrome
@@ -181,16 +252,28 @@ bindsym $mod+F5 exec thunderbird
 bindsym $mod+F6 exec VirtualBox --comment Windows 7 --startvm 080d700d-f56c-4c07-b239-b536d1c6e7a1 --no-startvm-errormsgbox
 bindsym $mod+Control+y exec yandex-browser
 
-workspace 1 output VGA-0
-workspace 2 output VGA-0
-workspace 3 output VGA-0
-workspace 4 output VGA-0
-workspace 5 output DVI-I-1
-workspace 6 output DVI-I-1
-workspace 7 output DVI-I-1
-workspace 8 output DVI-I-1
-workspace 9 output DVI-I-1
-workspace 10 output DVI-I-1
+workspace tag1 output DVI-I-1
+workspace tag2 output DVI-I-1
+workspace tag3 output DVI-I-1
+workspace tag4 output DVI-I-1
+workspace tag5 output DVI-I-1
+workspace tag6 output VGA-0
+workspace 7 output VGA-0
+workspace tag8 output VGA-0
+workspace 9 output VGA-0
+workspace 10 output VGA-0
+
+workspace 11 output DVI-I-1
+workspace 12 output DVI-I-1
+workspace 13 output DVI-I-1
+workspace 14 output DVI-I-1
+workspace 15 output DVI-I-1
+workspace 16 output VGA-0
+workspace 17 output VGA-0
+workspace 18 output VGA-0
+workspace 19 output VGA-0
+workspace 20 output VGA-0
+
 
 # autorun
 #exec --no-startup-id feh --bg-fill ~/Desktop/bg.jpg
@@ -205,8 +288,13 @@ for_window [class="Xfce4-notifyd"] floating enable, border 1pixel
 #for_window [class="Thunar"] floating enable, border 1pixel
 #for_window [class="Skype"] floating enable, border 1pixel
 #for_window [class="Pidgin"] floating enable, border 1pixel
+for_window [class="Telegram"] floating enable, border 1pixel
+for_window [class="Mattermost"] floating enable, border 1pixel
+for_window [class="Rocket.Chat+"] floating enable, border 1pixel
 for_window [class="Firefox"] border none
 for_window [class="Google-chrome"] border none
 for_window [class="Xfce4-notes"] floating enable, border none
+for_window [class="XCalc"] floating enable, border 1pixel
+for_window [class="mpv"] floating enable, border none, resize set 510 290, sticky enable, move right 1390, move down 760
 
 #for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
