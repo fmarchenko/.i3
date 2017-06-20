@@ -249,7 +249,7 @@ bindsym $mod+F2 exec charm
 bindsym $mod+F3 exec pidgin
 bindsym $mod+F4 exec skype
 bindsym $mod+F5 exec thunderbird
-bindsym $mod+F6 exec VirtualBox --comment Windows 7 --startvm 080d700d-f56c-4c07-b239-b536d1c6e7a1 --no-startvm-errormsgbox
+bindsym $mod+F6 exec sudo /usr/lib/virtualbox/VirtualBox --comment Windows 7 --startvm Windows\ 7 --no-startvm-errormsgbox
 bindsym $mod+Control+y exec yandex-browser
 
 workspace tag1 output DVI-I-1
@@ -279,12 +279,9 @@ workspace 20 output VGA-0
 #exec --no-startup-id feh --bg-fill ~/Desktop/bg.jpg
 #exec --no-startup-id nm-applet
 #exec --no-startup-id xset r rate 250 35
-exec killall -q xfce4-notifyd
-exec --no-startup-id dunst -config ~/.i3/i3_config_dunst
 
 for_window [class="Wine"] floating enable, border 1pixel
 for_window [class="TeamViewer"] floating enable, border 1pixel
-for_window [class="Xfce4-notifyd"] floating enable, border 1pixel
 #for_window [class="Thunar"] floating enable, border 1pixel
 #for_window [class="Skype"] floating enable, border 1pixel
 #for_window [class="Pidgin"] floating enable, border 1pixel
