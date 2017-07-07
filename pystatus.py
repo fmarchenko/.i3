@@ -3,6 +3,7 @@
 import subprocess
 
 from i3pystatus import Status
+from i3pystatus.weather import weathercom
 
 status = Status(standalone=True)
 
@@ -15,8 +16,11 @@ status.register("pulseaudio",
 status.register("xkblayout")
 
 status.register("weather",
-    location_code="RSXX1570:1:RS",
     colorize=True,
+    backend=weathercom.Weathercom(
+        location_code='RSST0734:1:RS',
+        update_error='<span color="#ff0000">!</span>',
+    )
 #    format="{current_temp} {current_wind}"
 )
 
@@ -25,25 +29,6 @@ status.register("weather",
 #                          ^-- calendar week
 status.register("clock",
     format="%a %-d %b %X KW%V",)
-
-# The battery monitor has many formatting options, see README for details
-
-# This would look like this, when discharging (or charging)
-# ↓14.22W 56.15% [77.81%] 2h:41m
-# And like this if full:
-# =14.22W 100.0% [91.21%]
-#
-# This would also display a desktop notification (via dbus) if the percentage
-# goes below 5 percent while discharging. The block will also color RED.
-status.register("battery",
-    format="{status}/{consumption:.2f}W {percentage:.2f}% [{percentage_design:.2f}%] {remaining:%E%hh:%Mm}",
-    alert=True,
-    alert_percentage=5,
-    status={
-        "DIS": "↓",
-        "CHR": "↑",
-        "FULL": "=",
-},)
 
 # Shows the average load of the last minute and the last 5 minutes
 # (the default value for format is used)
@@ -61,14 +46,8 @@ status.register("temp",
 #
 # Note: the network module requires PyPI package netifaces
 status.register("network",
-    interface="eth0",
-#    interface="wlan0",
+    interface="enp0s31f6",
     format_up="{v4cidr}",)
-
-status.register("network",
-    interface="wlan0",
-    format_up="{essid} ({v4}) {quality:2.0f}%"
-)
 
 # Shows disk usage of /
 # Format:
