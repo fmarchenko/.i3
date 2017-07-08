@@ -258,5 +258,6 @@ for_window [class="Google-chrome"] border none
 for_window [class="Xfce4-notes"] floating enable, border none
 for_window [class="XCalc"] floating enable, border 1pixel
 for_window [class="mpv"] floating enable, border none, resize set 510 290, sticky enable, move right 1390, move down 760
+for_window [class="TeamViewer" title="Computers & Contacts"] floating enable, border none, resize set 230 450
 
 #for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
