@@ -122,10 +122,10 @@ bindsym $mod+3 workspace $tag3
 bindsym $mod+4 workspace $tag4
 bindsym $mod+5 workspace $tag5
 bindsym $mod+6 workspace $tag6
-bindsym $mod+7 workspace 7
+bindsym $mod+7 workspace $tag7
 bindsym $mod+8 workspace $tag8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+9 workspace $tag9
+bindsym $mod+0 workspace $tag10
 
 # workspaces from 11-20
 bindsym $mod+Control+1 workspace 11
@@ -146,10 +146,10 @@ bindsym $mod+Shift+3 move container to workspace $tag3
 bindsym $mod+Shift+4 move container to workspace $tag4
 bindsym $mod+Shift+5 move container to workspace $tag5
 bindsym $mod+Shift+6 move container to workspace $tag6
-bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+7 move container to workspace $tag7
 bindsym $mod+Shift+8 move container to workspace $tag8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+9 move container to workspace $tag9
+bindsym $mod+Shift+0 move container to workspace $tag10
 
 # workspaces from 11-20
 bindsym $mod+Control+Shift+1 move container to workspace 11
@@ -203,21 +203,30 @@ bar {
 	status_command python3 ~/.i3/pystatus.py
 	font pango: Droid Sans, FontAwesome 8
 	position top
+	output DVI-I-1
 
     colors {
-    background $transparent
-    statusline $darkwhite
-    separator $transparent
+        background $transparent
+        statusline $darkwhite
+        separator $transparent
 
-#                      Border           Background       Text
-    focused_workspace  $transparent     $lightgray       $black
-    active_workspace   $transparent     $transparent     $darkgray
-    inactive_workspace $transparent     $transparent     $darkgray
-    urgent_workspace   $whitesmoke      $whitesmoke      $green
+    #                      Border           Background       Text
+        focused_workspace  $transparent     $lightgray       $black
+        active_workspace   $transparent     $transparent     $darkgray
+        inactive_workspace $transparent     $transparent     $darkgray
+        urgent_workspace   $whitesmoke      $whitesmoke      $green
         binding_mode       $whitesmoke      $whitesmoke      $black
     }
     #strip_workspace_numbers yes
 	i3bar_command i3bar
+}
+bar {
+    status_command python3 ~/.i3/pystatus2.py
+	position bottom
+	output VGA-0
+
+    workspace_buttons no
+    tray_output       none
 }
 
 # Colors          Border       Background Text
@@ -239,9 +248,9 @@ bindsym $mod+Control+Left workspace prev
 bindsym $mod+Control+Right workspace next
 
 # volume control
-bindsym $mod+Prior exec pactl set-sink-volume 2 +5%
-bindsym $mod+Next exec pactl set-sink-volume 2 -5%
-bindsym $mod+Home exec pactl set-sink-mute 2 toggle
+bindsym $mod+Prior exec pactl set-sink-volume 1 +5%
+bindsym $mod+Next exec pactl set-sink-volume 1 -5%
+bindsym $mod+Home exec pactl set-sink-mute 1 toggle
 
 # quick apps
 bindsym $mod+F1 exec google-chrome
@@ -252,16 +261,16 @@ bindsym $mod+F5 exec thunderbird
 bindsym $mod+F6 exec sudo /usr/lib/virtualbox/VirtualBox --comment Windows 7 --startvm Windows\ 7 --no-startvm-errormsgbox
 bindsym $mod+Control+y exec yandex-browser
 
-workspace tag1 output DVI-I-1
-workspace tag2 output DVI-I-1
-workspace tag3 output DVI-I-1
-workspace tag4 output DVI-I-1
-workspace tag5 output DVI-I-1
-workspace tag6 output VGA-0
-workspace 7 output VGA-0
-workspace tag8 output VGA-0
-workspace 9 output VGA-0
-workspace 10 output VGA-0
+workspace $tag1 output DVI-I-1
+workspace $tag2 output DVI-I-1
+workspace $tag3 output DVI-I-1
+workspace $tag4 output DVI-I-1
+workspace $tag5 output DVI-I-1
+workspace $tag6 output VGA-0
+workspace $tag7 output VGA-0
+workspace $tag8 output VGA-0
+workspace $tag9 output VGA-0
+workspace $tag10 output VGA-0
 
 workspace 11 output DVI-I-1
 workspace 12 output DVI-I-1
