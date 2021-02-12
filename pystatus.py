@@ -9,7 +9,7 @@ status = Status(standalone=True, logfile='/tmp/i3pystatus.log')
 #
 # Note: requires libpulseaudio from PyPI
 status.register("pulseaudio",
-    format="♪{volume}", sink="1")
+    format="♪{volume}", sink="0")
 
 status.register("xkblayout")
 
@@ -38,7 +38,11 @@ status.register("load")
 
 # Shows your CPU temperature, if you have a Intel CPU
 status.register("temp",
-    format="{temp:.0f}°C",)
+#    format="{Physical_id_0}°C {Core_0_bar}{Core_1_bar}{Core_2_bar}{Core_3_bar}",
+    format="{temp:.0f}°C", 
+#    lm_sensors_enabled=True,
+    file='/sys/class/hwmon/hwmon1/temp1_input',
+    dynamic_color=True)
 
 # Shows the address and up/down state of eth0. If it is up the address is shown in
 # green (the default value of color_up) and the CIDR-address is shown
@@ -48,7 +52,7 @@ status.register("temp",
 #
 # Note: the network module requires PyPI package netifaces
 status.register("network",
-    interface="enp0s31f6",
+    interface="enp5s0",
     format_up="{v4cidr}",)
 
 # Shows disk usage of /
@@ -72,5 +76,13 @@ status.register("disk",
 #        "play": "▶",
 #        "stop": "◾",
 #    },)
+
+#status.register("tcchk",
+#    host="mail1.100files.com", login="fmarchenko", password="KkQgH2Br", calendar_times_json="/home/fmarchenko/.i3/cp.json")
+
+# status.register("zabbix",
+#     zabbix_server="http://zeta.abtronics.ru/zabbix/", zabbix_user="fmarchenko", zabbix_password="LrGVst2D",
+#     # format="<span color=\"{color2}\">{a2_count}</span>",
+#     hints={"markup": "pango"})
 
 status.run()

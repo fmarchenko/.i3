@@ -6,7 +6,6 @@ Save as screeshot.py somewhere into your PATH
 bindsym --release Print exec --no-startup-id screenshot.py
 """
 
-
 import os
 from subprocess import Popen, PIPE
 from tempfile import NamedTemporaryFile
@@ -22,7 +21,7 @@ def import_screenshot():
     filename = NamedTemporaryFile(
         suffix='.png',
         prefix='screenshot_',
-        dir = os.path.expanduser('~/tmp'),
+        dir = os.path.expanduser('/tmp'),
         delete=False).name
     p = Popen(SCREENSHOT_UTILITY + " " + filename, shell=True)
     sts = os.waitpid(p.pid, 0)[1]
