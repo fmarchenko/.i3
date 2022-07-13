@@ -11,18 +11,15 @@ status = Status(standalone=True)
 #
 # Note: requires libpulseaudio from PyPI
 status.register("pulseaudio",
-    format="♪{volume}",)
+    format="♪{volume}", sink="alsa_output.pci-0000_00_1f.3.analog-stereo")
 
 status.register("xkblayout")
 
-status.register("weather",
-    colorize=True,
-    backend=weathercom.Weathercom(
-        location_code='RSST0734:1:RS',
-        update_error='<span color="#ff0000">!</span>',
-    )
-#    format="{current_temp} {current_wind}"
-)
+#status.register("weather",
+#    location_code="RSXX1570:1:RS",
+#    colorize=True,
+##    format="{current_temp} {current_wind}"
+#)
 
 # Displays clock like this:
 # Tue 30 Jul 11:59:46 PM KW31
@@ -46,8 +43,14 @@ status.register("temp",
 #
 # Note: the network module requires PyPI package netifaces
 status.register("network",
-    interface="enp0s31f6",
+    interface="enp3s0",
+#    interface="wlan0",
     format_up="{v4cidr}",)
+
+status.register("network",
+    interface="wlo1",
+    format_up="{essid} ({v4}) {quality:2.0f}%"
+)
 
 # Shows disk usage of /
 # Format:
@@ -71,6 +74,6 @@ status.register("disk",
 #    host="mail1.100files.com", login="fmarchenko", password="KkQgH2Br"
 #)
 
-status.register("time_tracker")
+#status.register("time_tracker")
 
 status.run()

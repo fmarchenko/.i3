@@ -12,9 +12,14 @@
 set $mod Mod4
 #set $mod Mod1
 
+# Set Displays
+set $dp1 eDP-1-1
+set $dp2 HDMI-1-1
+set $audio_sink alsa_output.pci-0000_00_1f.3.analog-stereo
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
-#font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
@@ -46,7 +51,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec --no-startup-id rofi -theme glue_pro_blue -font "hack 10" -show run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -76,6 +82,8 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+bindsym $mod+m move workspace to output left
+
 # split in horizontal orientation
 bindsym $mod+h split h
 
@@ -104,12 +112,12 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Name the workspaces
-set $tag1 "1: &#xf120;"
+set $tag1 "1: &#xf1a0;"
 set $tag2 "2: &#xf1d7;"
-set $tag3 "3: &#xf121;"
-set $tag4 "4: &#xf001;"
-set $tag5 "5: &#xf121;"
-set $tag6 "6: &#xf1a0;"
+set $tag3 "3: &#xf120;"
+set $tag4 "4: &#xf120;"
+set $tag5 "5: &#xf120;"
+set $tag6 "6: &#xf121;"
 set $tag7 "7: 7"
 set $tag8 "8: &#xf17a;"
 set $tag9 "9: 9"
@@ -177,23 +185,31 @@ bindsym $mod+r mode "resize"
 bar {
 #	status_command i3status | ~/i3status/contrib/wrapper.py
 	status_command python3 ~/.i3/pystatus.py
-	font pango: Droid Sans, FontAwesome 8
+	font pango:Droid Sans 8, FontAwesome 8
 	position top
+	output $dp1
 
     colors {
-    background $transparent
-    statusline $darkwhite
-    separator $transparent
+        background $transparent
+        statusline $darkwhite
+        separator $transparent
 
-#                      Border           Background       Text
-    focused_workspace  $transparent     $lightgray       $black
-    active_workspace   $transparent     $transparent     $darkgray
-    inactive_workspace $transparent     $transparent     $darkgray
-    urgent_workspace   $whitesmoke      $whitesmoke      $green
+#                          Border           Background       Text
+        focused_workspace  $transparent     $lightgray       $black
+        active_workspace   $transparent     $transparent     $darkgray
+        inactive_workspace $transparent     $transparent     $darkgray
+        urgent_workspace   $whitesmoke      $whitesmoke      $green
         binding_mode       $whitesmoke      $whitesmoke      $black
     }
     #strip_workspace_numbers yes
-	i3bar_command i3bar
+    i3bar_command i3bar
+}
+
+bar {
+        font pango:Droid Sans 8, FontAwesome 8
+        position top
+        output $dp2
+        tray_output none
 }
 
 # Colors          Border       Background Text
@@ -205,48 +221,63 @@ client.background $transparent
 #--- THIS IS MY CONFIG ---#
 
 # lock screen
-#bindsym $mod+Control+l exec i3lock -i /home/fmarchenko/.i3/lockscreen.png -n -c 000000 -t
-bindsym $mod+Control+l exec ~/.i3/scripts/i3lock.sh
+bindsym $mod+Control+l exec i3lock -i ~/.i3/lockscreen.png -n -c 000000 -t
+# bindsym $mod+Control+l exec ~/.i3/scripts/i3lock.sh
 # lock screen and suspend
-bindsym $mod+Control+s exec ~/.i3/scripts/i3lock.sh && systemctl suspend
 #bindsym $mod+Control+s exec i3lock && dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
-bindsym --release Print exec --no-startup-id /home/fmarchenko/.i3/screenshot.py
+bindsym $mod+Control+s exec i3lock -i ~/.i3/lockscreen.png -n -c 000000 -t && systemctl suspend
+# bindsym $mod+Control+s exec ~/.i3/scripts/i3lock.sh && systemctl suspend
+
 # switch workspaces by mod+ctrl+left/right
 bindsym $mod+Control+Left workspace prev
 bindsym $mod+Control+Right workspace next
 
 # volume control
-bindsym $mod+Prior exec pactl set-sink-volume 0 +5%
-bindsym $mod+Next exec pactl set-sink-volume 0 -5%
-bindsym $mod+Home exec pactl set-sink-mute 0 toggle
+bindsym $mod+Prior exec pactl set-sink-volume $audio_sink +5%
+bindsym $mod+Next exec pactl set-sink-volume $audio_sink -5%
+bindsym $mod+Home exec pactl set-sink-mute $audio_sink toggle
+
+#screenshots
+# bindsym --release Print exec --no-startup-id /home/fmarchenko/.i3/screenshot.py
+bindsym --release Print exec "scrot -m '~/Pictures/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
+bindsym --release Shift+Print exec "scrot -s '~/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+bindsym --release $mod+Shift+Print exec "scrot -u -d 4 '~/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
 
 # quick apps
 bindsym $mod+F1 exec google-chrome
-bindsym $mod+F2 exec charm
-bindsym $mod+F3 exec pidgin
+bindsym $mod+F2 exec pycharm
+bindsym $mod+F3 exec telegram-desktop
 bindsym $mod+F4 exec skype
 bindsym $mod+F5 exec thunderbird
 bindsym $mod+F6 exec sudo /usr/lib/virtualbox/VirtualBox --comment Windows 7 --startvm Windows\ 7 --no-startvm-errormsgbox
 bindsym $mod+Control+y exec yandex-browser
+bindsym $mod+F11 exec dm-tool switch-to-user nadya
+bindsym $mod+F12 exec monitorToggle
 
-workspace tag1 output DP-1
-workspace tag2 output DP-1
-workspace tag3 output DP-1
-workspace tag4 output DP-1
-workspace tag5 output DP-1
-workspace tag6 output DP-1
-workspace tag7 output DP-1
-workspace tag8 output DP-1
-workspace tag9 output DP-1
-workspace tag10 output DP-1
+workspace $tag1 output $dp1
+workspace $tag2 output $dp1
+workspace $tag3 output $dp1
+workspace $tag4 output $dp1
+workspace $tag5 output $dp1
+workspace $tag6 output $dp2
+workspace $tag7 output $dp2
+workspace $tag8 output $dp2
+workspace $tag9 output $dp2
+workspace $tag10 output $dp2
 
 # autorun
-exec_always --no-startup-id feh --bg-fill ~/Desktop/bg.jpg
-exec_always --no-startup-id nm-applet
+exec setxkbmap "us,ru" ",winkeys" "grp:alt_shift_toggle"
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+exec --no-startip-id xfce4-power-manager
+exec --no-startup-id feh --bg-scale ~/Desktop/.bg.jpg
+exec --no-startup-id play-with-mpv
+exec tilda -c -p dropdown -T "tilda"
 #exec --no-startup-id xset r rate 250 35
 
 for_window [class="Wine"] floating enable, border 1pixel
 for_window [class="TeamViewer"] floating enable, border 1pixel
+for_window [class=”Tilda” instance=”dropdown”] floating enable move absolute position 0 0
 #for_window [class="Thunar"] floating enable, border 1pixel
 #for_window [class="Skype"] floating enable, border 1pixel
 #for_window [class="Pidgin"] floating enable, border 1pixel
@@ -259,5 +290,9 @@ for_window [class="Xfce4-notes"] floating enable, border none
 for_window [class="XCalc"] floating enable, border 1pixel
 for_window [class="mpv"] floating enable, border none, resize set 510 290, sticky enable, move right 1390, move down 760
 for_window [class="TeamViewer" title="Computers & Contacts"] floating enable, border none, resize set 230 450
+for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
 
-#for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
+assign [class="Google-chrome"] $tag1
+assign [class="jetbrains-pycharm"] $tag6
+assign [class="TelegramDesktop"] $tag2
+assign [class="Slack"] $tag2
