@@ -8,8 +8,7 @@ status = Status(standalone=True, logfile='/tmp/i3pystatus.log')
 # Shows pulseaudio default sink volume
 #
 # Note: requires libpulseaudio from PyPI
-status.register("pulseaudio",
-    format="♪{volume}", sink="0")
+status.register("pulseaudio", format="♪{volume}", sink="0")
 
 status.register("xkblayout")
 
@@ -52,7 +51,7 @@ status.register("temp",
 #
 # Note: the network module requires PyPI package netifaces
 status.register("network",
-    interface="enp5s0",
+    interface="enp4s0",
     format_up="{v4cidr}",)
 
 # Shows disk usage of /

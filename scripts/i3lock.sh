@@ -20,6 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-scrot /tmp/screen_locked.png
-convert /tmp/screen_locked.png -blur 8x8 /tmp/screen_locked2.png
-i3lock -i /tmp/screen_locked2.png
+scrot -o /tmp/screen_locked.png
+convert /tmp/screen_locked.png -blur 8x8 /tmp/screen_locked.png
+i3lock -i /tmp/screen_locked.png
